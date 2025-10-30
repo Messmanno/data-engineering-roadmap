@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data (ne JAMAIS commiter de grosses données)
+*.csv
+*.json
+*.parquet
+data/
+datasets/
+!sample-data/  # Sauf données d'exemple
+
+# Credentials
+.env
+*.pem
+*.key
+credentials.json
+secrets.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build
+dist/
+build/
+*.egg-info/
