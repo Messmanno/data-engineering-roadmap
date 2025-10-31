@@ -1,0 +1,452 @@
+1️⃣ Les Listes — la base de toute collection ordonnée
+💡 Définition :
+
+Une liste est une collection ordonnée et modifiable d’éléments.
+Les éléments peuvent être de types différents (entiers, chaînes, flottants, etc.).
+
+# Création d'une liste
+fruits = ["pomme", "banane", "mangue"]
+
+# Liste mixte
+infos = ["Alice", 25, True]
+
+🔹 Accéder aux éléments :
+print(fruits[0])     # pomme
+print(fruits[-1])    # mangue (index négatif = depuis la fin)
+
+🔹 Modifier des éléments :
+fruits[1] = "orange"
+print(fruits)  # ['pomme', 'orange', 'mangue']
+
+🔹 Fonctions utiles :
+fruits.append("ananas")     # ajoute à la fin
+fruits.insert(1, "kiwi")    # insère à une position
+fruits.remove("orange")     # supprime un élément
+fruits.pop()                # supprime le dernier
+print(len(fruits))          # longueur de la liste
+
+🔹 Itération :
+for fruit in fruits:
+    print(fruit)
+
+🔹 List comprehension (très utilisée en data) :
+nombres = [1, 2, 3, 4, 5]
+carres = [x**2 for x in nombres]
+print(carres)  # [1, 4, 9, 16, 25]
+
+
+👉 Astuce Data :
+Tu peux filtrer directement :
+
+pairs = [x for x in nombres if x % 2 == 0]
+
+🔹 Fonctions courantes :
+Fonction	Description
+sum(liste)	Somme des éléments
+max(liste) / min(liste)	Valeurs extrêmes
+sorted(liste)	Tri croissant
+liste.sort(reverse=True)	Tri en place (décroissant possible)
+liste.count(x)	Compte le nombre d’occurrences
+
+************************************************************************************************************************
+2️⃣ Les Dictionnaires — les bases de données miniatures
+💡 Définition :
+
+Un dictionnaire stocke des paires clé : valeur.
+C’est non ordonné (avant Python 3.7) et modifiable.
+
+etudiant = {
+    "nom": "Ali",
+    "age": 22,
+    "filiere": "Data Science"
+}
+
+🔹 Accès et modification :
+print(etudiant["nom"])      # Ali
+etudiant["age"] = 23        # modification
+etudiant["email"] = "ali@gmail.com"  # ajout
+
+🔹 Méthodes utiles :
+print(etudiant.keys())      # dict_keys(['nom', 'age', 'filiere', 'email'])
+print(etudiant.values())    # dict_values([...])
+print(etudiant.items())     # liste de tuples (clé, valeur)
+
+🔹 Suppression :
+etudiant.pop("email")
+del etudiant["filiere"]
+
+🔹 Itération :
+for cle, valeur in etudiant.items():
+    print(cle, ":", valeur)
+
+🔹 Dictionnaire imbriqué :
+classe = {
+    "Ali": {"note": 14, "age": 22},
+    "Sara": {"note": 17, "age": 21}
+}
+
+print(classe["Sara"]["note"])  # 17
+
+🔹 Dictionnaire par compréhension :
+nombres = [1, 2, 3, 4]
+carres = {x: x**2 for x in nombres}
+print(carres)  # {1:1, 2:4, 3:9, 4:16}
+
+************************************************************************************************************************
+3️⃣ Les Sets (ensembles) — la collection sans doublons
+💡 Définition :
+
+Un set est une collection non ordonnée et sans doublons.
+
+langages = {"Python", "Java", "C++", "Python"}
+print(langages)  # {'Python', 'Java', 'C++'} (pas de doublons)
+
+🔹 Ajout / suppression :
+langages.add("Go")
+langages.remove("Java")
+
+🔹 Opérations d’ensemble (puissance des sets) :
+A = {1, 2, 3, 4}
+B = {3, 4, 5, 6}
+
+print(A | B)   # union → {1,2,3,4,5,6}
+print(A & B)   # intersection → {3,4}
+print(A - B)   # différence → {1,2}
+print(A ^ B)   # différence symétrique → {1,2,5,6}
+
+🔹 Vérifier l’appartenance :
+if "Python" in langages:
+    print("Oui, Python est présent !")
+
+************************************************************************************************************************
+| Structure        | Ordonnée                  | Modifiable   | Doublons   | Accès par     |
+| ---------------- | ------------------------- | ----------   | --------   | --------------|
+| **Liste**        | ✅ Oui                     | ✅ Oui      | ✅ Oui    | Index          |
+| **Dictionnaire** | ✅ Oui (depuis Python 3.7) | ✅ Oui      | ❌ Non    | Clé            |
+| **Set**          | ❌ Non                     | ✅ Oui      | ❌ Non    | Valeur directe |
+************************************************************************************************************************
+🧠 COURS PYTHON — *args et **kwargs
+🔹 1️⃣ Pourquoi utiliser *args et **kwargs ?
+
+Par défaut, une fonction prend un nombre fixe de paramètres.
+
+Exemple classique :
+
+def addition(a, b):
+    return a + b
+
+print(addition(2, 3))  # 5
+
+
+Mais si tu veux additionner 3, 4, 10 ou 100 nombres, tu devrais redéfinir ta fonction à chaque fois.
+👉 Solution : utiliser des arguments variables avec *args et **kwargs.
+
+🔸 2️⃣ *args — les arguments positionnels variables
+💡 Définition :
+
+*args permet de passer un nombre illimité d’arguments positionnels à une fonction.
+Ils sont stockés sous forme de tuple.
+
+Exemple :
+def addition(*args):
+    print(args)
+
+addition(2, 4, 6)
+
+
+📤 Résultat :
+
+(2, 4, 6)
+
+
+Tu peux ensuite les parcourir :
+
+def addition(*args):
+    return sum(args)
+
+print(addition(1, 2, 3, 4))  # 10
+
+⚙️ Explication :
+
+*args → « * » décompresse les arguments en liste de valeurs
+
+args est un nom conventionnel, mais tu pourrais l’appeler *nombres, par exemple :
+
+def afficher(*nombres):
+    for n in nombres:
+        print(n)
+
+Autres exemples :
+def concatener(*mots):
+    return " ".join(mots)
+
+print(concatener("Data", "Science", "avec", "Python"))
+# Résultat : Data Science avec Python
+
+🧠 Astuce :
+
+Tu peux combiner *args avec des arguments normaux :
+
+def saluer(prenom, *messages):
+    print(f"Bonjour {prenom} !")
+    for msg in messages:
+        print("-", msg)
+
+saluer("Ali", "Comment ça va ?", "Prêt pour le cours ?")
+
+🔸 3️⃣ **kwargs — les arguments nommés variables
+💡 Définition :
+
+**kwargs permet de passer un nombre illimité d’arguments nommés (clé=valeur).
+Ils sont stockés sous forme de dictionnaire.
+
+Exemple :
+def afficher_infos(**kwargs):
+    print(kwargs)
+
+afficher_infos(nom="Ali", age=25, pays="Côte d’Ivoire")
+
+
+📤 Résultat :
+
+{'nom': 'Ali', 'age': 25, 'pays': 'Côte d’Ivoire'}
+
+Tu peux parcourir le dictionnaire :
+def afficher_infos(**kwargs):
+    for cle, valeur in kwargs.items():
+        print(f"{cle} : {valeur}")
+
+afficher_infos(nom="Sara", domaine="Data", niveau="Intermédiaire")
+
+
+📤 Résultat :
+
+nom : Sara
+domaine : Data
+niveau : Intermédiaire
+
+🧠 Exemple concret :
+def creer_profil(**infos):
+    profil = {"id": 1}
+    profil.update(infos)
+    return profil
+
+print(creer_profil(nom="Ali", ville="Abidjan"))
+# {'id': 1, 'nom': 'Ali', 'ville': 'Abidjan'}
+
+🔹 4️⃣ Combinaison *args et **kwargs
+
+Tu peux les combiner dans une même fonction 👇
+
+def exemple(a, b, *args, **kwargs):
+    print("a =", a)
+    print("b =", b)
+    print("args =", args)
+    print("kwargs =", kwargs)
+
+exemple(1, 2, 3, 4, 5, nom="Ali", age=23)
+
+
+📤 Résultat :
+
+a = 1
+b = 2
+args = (3, 4, 5)
+kwargs = {'nom': 'Ali', 'age': 23}
+
+
+⚠️ Ordre à respecter :
+
+def fonction(paramètres_pos, *args, paramètres_nommes_defaut, **kwargs)
+
+🔹 5️⃣ Déballage (unpacking) avec * et **
+💡 Déballer une liste dans une fonction :
+def addition(a, b, c):
+    return a + b + c
+
+nombres = [1, 2, 3]
+print(addition(*nombres))  # 6
+
+💡 Déballer un dictionnaire :
+def saluer(nom, age):
+    print(f"Salut {nom}, tu as {age} ans.")
+
+infos = {"nom": "Ali", "age": 25}
+saluer(**infos)
+
+************************************************************************************************************************
+🧠 COURS PYTHON — Générateurs & Modules
+🌀 PARTIE 1 : LES GÉNÉRATEURS
+🔹 1️⃣ Qu’est-ce qu’un générateur ?
+
+Un générateur est une fonction spéciale qui ne retourne pas toutes ses valeurs d’un coup, mais les produit une à une, à la demande.
+👉 Cela permet d’économiser de la mémoire et de gérer de grandes quantités de données efficacement (fichiers, gros jeux de données, flux…).
+
+🔹 2️⃣ Différence entre fonction normale et générateur
+🧩 Fonction classique :
+def carre_normale(n):
+    result = []
+    for i in range(n):
+        result.append(i**2)
+    return result
+
+print(carre_normale(5))  # [0, 1, 4, 9, 16]
+
+
+Cette fonction crée toute la liste en mémoire avant de la renvoyer.
+
+⚙️ Générateur équivalent :
+def carre_gen(n):
+    for i in range(n):
+        yield i**2
+
+for val in carre_gen(5):
+    print(val)
+
+
+📤 Résultat :
+
+0
+1
+4
+9
+16
+
+🔹 3️⃣ Le mot-clé yield
+
+yield remplace return.
+
+Il met la fonction en pause et garde son état.
+
+Quand on rappelle le générateur, l’exécution reprend là où elle s’était arrêtée.
+
+🔹 5️⃣ Les générateurs avec compréhension
+
+Tu peux créer un générateur en une ligne (comme une list comprehension) :
+
+gen = (x**2 for x in range(5))
+print(next(gen))  # 0
+print(next(gen))  # 1
+
+
+📦 PARTIE 2 : LES MODULES EN PYTHON
+🔹 1️⃣ Qu’est-ce qu’un module ?
+
+Un module est un fichier Python (.py) qui contient des fonctions, classes ou variables qu’on peut réutiliser dans d’autres programmes.
+
+👉 C’est la base de la modularité et de la réutilisation du code en Python.
+
+🔹 2️⃣ Créer ton propre module
+Étape 1 — Crée un fichier :
+
+📄 mon_module.py
+
+def saluer(nom):
+    return f"Bonjour {nom} !"
+
+PI = 3.14159
+
+Étape 2 — Utiliser ton module :
+
+📄 programme.py
+
+import mon_module
+
+print(mon_module.saluer("Ali"))
+print(mon_module.PI)
+
+
+📤 Résultat :
+
+Bonjour Ali !
+3.14159
+
+🔹 3️⃣ Importer seulement ce dont tu as besoin
+from mon_module import saluer
+
+print(saluer("Sara"))
+
+🔹 4️⃣ Renommer un module importé
+import mon_module as mm
+print(mm.saluer("Moussa"))
+
+🔹 5️⃣ Importer plusieurs modules
+import math
+import random
+
+print(math.sqrt(16))  # 4.0
+print(random.randint(1, 10))  # nombre aléatoire entre 1 et 10
+
+🔹 6️⃣ Les modules standards Python (très utilisés en Data)
+Module	Utilisation principale
+math	Fonctions mathématiques
+random	Génération aléatoire
+os	Gestion du système de fichiers
+sys	Interaction avec le système
+datetime	Dates et heures
+json	Lire/écrire des fichiers JSON
+csv	Manipulation de fichiers CSV
+collections	Structures avancées (Counter, defaultdict)
+Exemple concret :
+import csv
+
+with open('data.csv', newline='') as fichier:
+    lecteur = csv.reader(fichier)
+    for ligne in lecteur:
+        print(ligne)
+
+🔹 7️⃣ Les packages
+
+Un package est un dossier contenant plusieurs modules avec un fichier __init__.py.
+
+mon_package/
+│
+├── __init__.py
+├── calculs.py
+└── affichage.py
+
+
+Exemple :
+
+from mon_package.calculs import addition
+
+🔹 8️⃣ Créer ton propre package (exercice d’organisation)
+
+Crée un dossier outil_data
+
+Ajoute :
+
+nettoyage.py (pour fonctions de nettoyage de texte)
+
+analyse.py (pour fonctions de moyenne et écart-type)
+
+__init__.py
+
+Importe ces modules dans un script principal
+
+🧠 Exercice pratique sur les modules :
+
+Crée un module statistiques.py contenant :
+
+def moyenne(liste):
+    return sum(liste) / len(liste)
+
+def variance(liste):
+    m = moyenne(liste)
+    return sum((x - m)**2 for x in liste) / len(liste)
+
+
+Importe-le dans un autre fichier et calcule :
+
+from statistiques import moyenne, variance
+
+data = [10, 12, 14, 16]
+print(moyenne(data))
+print(variance(data))
+
+🧾 Résumé du cours
+Concept	Description	Avantage
+Générateur	Fonction qui renvoie une valeur à la fois avec yield	Économe en mémoire
+yield	Met la fonction en pause et reprend plus tard	Gère des flux continus
+Module	Fichier Python réutilisable	Code organisé
+Package	Dossier regroupant plusieurs modules	Organisation à grande échelle
